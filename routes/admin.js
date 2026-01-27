@@ -24,6 +24,7 @@ router.get('/logout', userController.logout );
 // User CRUD Routes
 
 router.get('/users', userController.users );
+router.get('/create', userController.createUserPage );
 router.post('/create', userController.createUser );
 router.get('/user', userController.user );
 router.get('/updateUser/:id', userController.updateUserPage );

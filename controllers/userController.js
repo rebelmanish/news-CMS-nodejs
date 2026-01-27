@@ -2,14 +2,29 @@
 const mongoose = require('mongoose')
 const User = require('../models/User.model')
 
-const loginPage = async (req, res) => { }
-const adminLogin = async (req, res) => { }
-const logout = async (req, res) => { }
+const loginPage = async (req, res) => {
+    res.render('admin/login',{
+        layout: false
+    })
+ }
 
-const users = async (req, res) => { }
-const createUser = async (req, res) => { }
+const adminLogin = async (req, res) => { }
+
+const logout = async (req, res) => {
+    res.render('admin/logout')
+ }
+
+const users = async (req, res) => {
+    res.render('admin/users')
+ }
+const createUserPage = async (req, res) => {
+    res.render('admin/users/create.ejs')
+ }
 const user = async (req, res) => { }
-const updateUserPage = async (req, res) => { }
+const updateUserPage = async (req, res) => {
+    res.render('admin/users/update')
+ }
+const createUser = async (req, res) => { } 
 const updateUser = async (req, res) => { }
 const deleteUser = async (req, res) => { }
 
@@ -21,6 +36,7 @@ module.exports = {
     adminLogin,
     logout,
     users,
+    createUserPage,
     createUser,
     user,
     updateUserPage,
