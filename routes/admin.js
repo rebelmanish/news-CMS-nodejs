@@ -24,7 +24,7 @@ router.get('/logout', userController.logout );
 // User CRUD Routes
 
 router.get('/users', userController.users );
-router.get('/create', userController.createUserPage );
+router.get('/createUser', userController.createUserPage );
 router.post('/create', userController.createUser );
 router.get('/user', userController.user );
 router.get('/updateUser/:id', userController.updateUserPage );
@@ -36,8 +36,8 @@ router.get('/deleteUser/:id', userController.deleteUser );
 // Categories CRUD Routes
 
 router.get('/categories', categoryController.categories );
-router.post('/create', categoryController.createCategory );
-router.get('/category', categoryController.category );
+router.post('/createCategory', categoryController.createCategory );
+router.get('/createCategory', categoryController.createCategoryPage  );
 router.get('/updateCategory/:id', categoryController.updateCategoryPage );
 router.post('/updateCategory/:id', categoryController.updateCategory );
 router.get('/deleteCategory/:id', categoryController.deleteCategory );
@@ -46,8 +46,8 @@ router.get('/deleteCategory/:id', categoryController.deleteCategory );
 // Articles CRUD Routes
 
 router.get('/articles', acticleController.articles );
-router.post('/create', acticleController.createArticle );
-router.get('/article', acticleController.article );
+router.post('/createArticles', acticleController.createArticle );
+router.get('/createArticles', acticleController.createArticlePage);
 router.get('/updateArticle/:id', acticleController.updateArticlePage );
 router.post('/updateArticle/:id', acticleController.updateArticle );
 router.get('/deleteArticle/:id', acticleController.deleteArticle );

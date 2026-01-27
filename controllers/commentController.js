@@ -4,7 +4,9 @@
 const Comment = require('../models/Comment.model')
 
 
-const comments = async (req, res) => { };
+const comments = async (req, res) => {
+    res.render('admin/comments')
+ };
 const deleteComment = async (req, res) => { };
 
 module.exports = {
