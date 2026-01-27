@@ -61,6 +61,10 @@ router.get('/deleteComments/:id', commentController.deleteComment );
 
 router.get('/dashboard', userController.dashboard)
 
+// Setting Routes
+
+router.get('/settings', userController.settings)
+
 
 
 

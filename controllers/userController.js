@@ -32,6 +32,9 @@ const dashboard = async (req, res) => {
     res.render('admin/dashboard')
  }
 
+ const settings = async (req, res) => {
+    res.render('admin/setting')
+ }
 
 module.exports = {
     loginPage,
@@ -44,6 +47,7 @@ module.exports = {
     updateUserPage,
     updateUser,
     deleteUser,
-    dashboard
+    dashboard,
+    settings
 }
 
