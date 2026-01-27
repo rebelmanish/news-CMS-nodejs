@@ -57,6 +57,9 @@ router.get('/deleteArticle/:id', acticleController.deleteArticle );
 router.get('/comments', commentController.comments );
 router.get('/deleteComments/:id', commentController.deleteComment );
 
+// dashboard
+
+router.get('/dashboard', userController.dashboard)
 
 
 

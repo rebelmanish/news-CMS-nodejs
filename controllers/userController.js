@@ -28,7 +28,9 @@ const createUser = async (req, res) => { }
 const updateUser = async (req, res) => { }
 const deleteUser = async (req, res) => { }
 
-
+const dashboard = async (req, res) => {
+    res.render('admin/dashboard')
+ }
 
 
 module.exports = {
@@ -41,6 +43,7 @@ module.exports = {
     user,
     updateUserPage,
     updateUser,
-    deleteUser
+    deleteUser,
+    dashboard
 }
 
