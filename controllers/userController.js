@@ -15,7 +15,9 @@ const logout = async (req, res) => {
  }
 
 const users = async (req, res) => {
-    res.render('admin/users')
+    const users = await User.find()
+    res.render('admin/users', { users })
+    console.log(users)
  }
 const createUserPage = async (req, res) => {
     res.render('admin/users/create.ejs')
@@ -24,7 +26,10 @@ const user = async (req, res) => { }
 const updateUserPage = async (req, res) => {
     res.render('admin/users/update')
  }
-const createUser = async (req, res) => { } 
+const createUser = async (req, res) => {
+    await User.create(req.body)
+    res.redirect('/admin/users')
+ } 
 const updateUser = async (req, res) => { }
 const deleteUser = async (req, res) => { }
 

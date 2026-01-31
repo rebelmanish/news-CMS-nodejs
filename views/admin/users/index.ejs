@@ -8,7 +8,7 @@
                 <a class="add-new" href="/admin/createUser">add user</a>
               </div>
               <div class="col-md-12">
-                <table class="content-table">
+                <!-- <table class="content-table">
                     <thead>
                       <th>S.No.</th>
                       <th>Full Name</th>
@@ -51,7 +51,29 @@
                             <td class='delete'><a href='delete-user.html'><i class='fa fa-trash-o'></i></a></td>
                         </tr>
                     </tbody>
-                </table>
+                </table> -->
+                <table class="content-table">
+                    <thead>
+                      <th>S.No.</th>
+                      <th>Full Name</th>
+                      <th>User Name</th>
+                      <th>Role</th>
+                      <th>Edit</th>
+                      <th>Delete</th>
+                    </thead>
+                    <tbody>
+                      <% users.forEach(function(user, index) { %>
+                        <tr>
+                            <td class='id'><%= index + 1 %></td>
+                            <td><%= user.fullname %></td>
+                            <td><%= user.username %></td>
+                            <td><%= user.role %></td>
+                            <td class='edit'><a href='/admin/updateUser/<%= user._id %>'><i class='fa fa-edit'></i></a></td>
+                            <td class='delete'><a href='/admin/deleteUser/<%= user._id %>'><i class='fa fa-trash-o'></i></a></td>
+                        </tr>
+                      <% }); %>
+                    </tbody>
+                  </table>  
                 <nav>
                   <ul class="pagination">
                     <li class="page-item disabled">
