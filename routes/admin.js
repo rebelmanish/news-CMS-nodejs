@@ -29,7 +29,7 @@ router.post('/create', userController.createUser );
 router.get('/user', userController.user );
 router.get('/updateUser/:id', userController.updateUserPage );
 router.post('/updateUser/:id', userController.updateUser );
-router.get('/deleteUser/:id', userController.deleteUser );
+router.delete('/deleteUser/:id', userController.deleteUser );
 
 
 
@@ -40,7 +40,7 @@ router.post('/createCategory', categoryController.createCategory );
 router.get('/createCategory', categoryController.createCategoryPage  );
 router.get('/updateCategory/:id', categoryController.updateCategoryPage );
 router.post('/updateCategory/:id', categoryController.updateCategory );
-router.get('/deleteCategory/:id', categoryController.deleteCategory );
+router.delete('/deleteCategory/:id', categoryController.deleteCategory );
 
 
 // Articles CRUD Routes
