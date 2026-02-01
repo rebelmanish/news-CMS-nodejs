@@ -7,9 +7,7 @@ const acticleController = require('../controllers/articleController')
 const userController = require('../controllers/userController')
 const categoryController = require('../controllers/categoryController');
 const  commentController  = require('../controllers/commentController');
-
-
-
+const isLogged = require('../middlewares/isLogged');
 
 
 
@@ -19,53 +17,52 @@ const  commentController  = require('../controllers/commentController');
 router.get('/login', userController.loginPage );
 router.get('/', userController.loginPage );
 router.post('/submit', userController.adminLogin );
-router.get('/logout', userController.logout );
+router.get('/logout', isLogged, userController.logout );
 
 
 // User CRUD Routes
 
-router.get('/users', userController.users );
-router.get('/createUser', userController.createUserPage );
-router.post('/create', userController.createUser );
-router.get('/user', userController.user );
-router.get('/updateUser/:id', userController.updateUserPage );
-router.post('/updateUser/:id', userController.updateUser );
-router.delete('/deleteUser/:id', userController.deleteUser );
+router.get('/users', isLogged, userController.users );
+router.get('/createUser', isLogged, userController.createUserPage );
+router.post('/create', isLogged, userController.createUser );
+router.get('/user', isLogged, userController.user );
+router.get('/updateUser/:id', isLogged, userController.updateUserPage );
+router.post('/updateUser/:id', isLogged, userController.updateUser );
+router.delete('/deleteUser/:id', isLogged, userController.deleteUser );
 
 
 
 // Categories CRUD Routes
 
-router.get('/categories', categoryController.categories );
-router.post('/createCategory', categoryController.createCategory );
-router.get('/createCategory', categoryController.createCategoryPage  );
-router.get('/updateCategory/:id', categoryController.updateCategoryPage );
-router.post('/updateCategory/:id', categoryController.updateCategory );
-router.delete('/deleteCategory/:id', categoryController.deleteCategory );
+router.get('/categories', isLogged, categoryController.categories );
+router.post('/createCategory', isLogged, categoryController.createCategory );
+router.get('/createCategory', isLogged, categoryController.createCategoryPage  );
+router.get('/updateCategory/:id', isLogged, categoryController.updateCategoryPage );
+router.post('/updateCategory/:id', isLogged, categoryController.updateCategory );
+router.delete('/deleteCategory/:id', isLogged, categoryController.deleteCategory );
 
 
 // Articles CRUD Routes
 
-router.get('/articles', acticleController.articles );
-router.post('/createArticles', acticleController.createArticle );
-router.get('/createArticles', acticleController.createArticlePage);
-router.get('/updateArticle/:id', acticleController.updateArticlePage );
-router.post('/updateArticle/:id', acticleController.updateArticle );
-router.get('/deleteArticle/:id', acticleController.deleteArticle );
+router.get('/articles', isLogged, acticleController.articles );
+router.post('/createArticles', isLogged, acticleController.createArticle );
+router.get('/createArticles', isLogged, acticleController.createArticlePage);
+router.get('/updateArticle/:id', isLogged, acticleController.updateArticlePage );
+router.post('/updateArticle/:id', isLogged, acticleController.updateArticle );
+router.get('/deleteArticle/:id', isLogged, acticleController.deleteArticle );
 
 // Comments Routes
 
-router.get('/comments', commentController.comments );
-router.get('/deleteComments/:id', commentController.deleteComment );
+router.get('/comments', isLogged, commentController.comments );
+router.get('/deleteComments/:id', isLogged, commentController.deleteComment );
 
 // dashboard
 
-router.get('/dashboard', userController.dashboard)
+router.get('/dashboard', isLogged, userController.dashboard)
 
 // Setting Routes
 
-router.get('/settings', userController.settings)
-
+router.get('/settings', isLogged, userController.settings)
 
 
 
