@@ -17,6 +17,7 @@ const  commentController  = require('../controllers/commentController');
 
 
 router.get('/login', userController.loginPage );
+router.get('/', userController.loginPage );
 router.post('/submit', userController.adminLogin );
 router.get('/logout', userController.logout );
 
