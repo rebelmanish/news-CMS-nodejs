@@ -8,6 +8,7 @@ const userController = require('../controllers/userController')
 const categoryController = require('../controllers/categoryController');
 const  commentController  = require('../controllers/commentController');
 const isLogged = require('../middlewares/isLogged');
+const isAdmin = require('../middlewares/isAdmin');
 
 
 
@@ -18,6 +19,26 @@ router.get('/login', userController.loginPage );
 router.get('/', userController.loginPage );
 router.post('/submit', userController.adminLogin );
 router.get('/logout', isLogged, userController.logout );
+
+// Articles CRUD Routes
+
+router.get('/articles', isLogged, acticleController.articles );
+router.post('/createArticles', isLogged, acticleController.createArticle );
+router.get('/createArticles', isLogged, acticleController.createArticlePage);
+router.get('/updateArticle/:id', isLogged, acticleController.updateArticlePage );
+router.post('/updateArticle/:id', isLogged, acticleController.updateArticle );
+router.get('/deleteArticle/:id', isLogged, acticleController.deleteArticle );
+
+// Comments Routes
+
+router.get('/comments', isLogged, commentController.comments );
+router.get('/deleteComments/:id', isLogged, commentController.deleteComment );
+
+// dashboard
+
+router.get('/dashboard', isLogged, userController.dashboard);
+
+router.use(isAdmin)
 
 
 // User CRUD Routes
@@ -42,23 +63,6 @@ router.post('/updateCategory/:id', isLogged, categoryController.updateCategory )
 router.delete('/deleteCategory/:id', isLogged, categoryController.deleteCategory );
 
 
-// Articles CRUD Routes
-
-router.get('/articles', isLogged, acticleController.articles );
-router.post('/createArticles', isLogged, acticleController.createArticle );
-router.get('/createArticles', isLogged, acticleController.createArticlePage);
-router.get('/updateArticle/:id', isLogged, acticleController.updateArticlePage );
-router.post('/updateArticle/:id', isLogged, acticleController.updateArticle );
-router.get('/deleteArticle/:id', isLogged, acticleController.deleteArticle );
-
-// Comments Routes
-
-router.get('/comments', isLogged, commentController.comments );
-router.get('/deleteComments/:id', isLogged, commentController.deleteComment );
-
-// dashboard
-
-router.get('/dashboard', isLogged, userController.dashboard)
 
 // Setting Routes
 
