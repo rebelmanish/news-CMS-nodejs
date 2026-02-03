@@ -27,7 +27,7 @@ router.post('/createArticles', isLogged, acticleController.createArticle );
 router.get('/createArticles', isLogged, acticleController.createArticlePage);
 router.get('/updateArticle/:id', isLogged, acticleController.updateArticlePage );
 router.post('/updateArticle/:id', isLogged, acticleController.updateArticle );
-router.get('/deleteArticle/:id', isLogged, acticleController.deleteArticle );
+router.delete('/deleteArticle/:id', isLogged, acticleController.deleteArticle );
 
 // Comments Routes
 
