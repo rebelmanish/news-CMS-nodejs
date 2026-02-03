@@ -29,7 +29,7 @@ const adminLogin = async (req, res) => {
             return res.status(400).send('Invalid username or password')  
         }
 
-        const jwtData = { id: user._id, role: user.role, username: user.username }
+        const jwtData = { id: user._id, role: user.role, username: user.username, fname: user.fullname }
         const token = jwt.sign( jwtData, process.env.JWT_SECRET, { expiresIn: '1h' })
         res.cookie('token', token, { httpOnly: true, maxAge: 60 * 60 * 1000 }) // 1 hour
         res.redirect('/admin/dashboard')
@@ -47,11 +47,11 @@ const logout = async (req, res) => {
 
 const users = async (req, res) => {
     const users = await User.find()
-    res.render('admin/users', { users })
+    res.render('admin/users', { users, user: req.user })
     // console.log(users)
  }
 const createUserPage = async (req, res) => {
-    res.render('admin/users/create.ejs')
+    res.render('admin/users/create.ejs', { user: req.user})
  }
 const user = async (req, res) => { }
 const updateUserPage = async (req, res) => {
@@ -61,7 +61,7 @@ const updateUserPage = async (req, res) => {
         if (!user) {
             return res.status(404).send('User not found')
         }
-        res.render('admin/users/update', { user })
+        res.render('admin/users/update', { user,  user: req.user })
     } catch (error) {
         console.log(error)
         res.status(500).send('Internal Server Error')
@@ -111,11 +111,11 @@ const deleteUser = async (req, res) => {
  }
 
 const dashboard = async (req, res) => {
-    res.render('admin/dashboard')
+    res.render('admin/dashboard', { user: req.user })
  }
 
  const settings = async (req, res) => {
-    res.render('admin/setting')
+    res.render('admin/setting', { user: req.user })
  }
 
 module.exports = {

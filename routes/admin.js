@@ -38,35 +38,35 @@ router.get('/deleteComments/:id', isLogged, commentController.deleteComment );
 
 router.get('/dashboard', isLogged, userController.dashboard);
 
-router.use(isAdmin)
+// router.use(isAdmin)
 
 
 // User CRUD Routes
 
-router.get('/users', isLogged, userController.users );
-router.get('/createUser', isLogged, userController.createUserPage );
-router.post('/create', isLogged, userController.createUser );
-router.get('/user', isLogged, userController.user );
-router.get('/updateUser/:id', isLogged, userController.updateUserPage );
-router.post('/updateUser/:id', isLogged, userController.updateUser );
-router.delete('/deleteUser/:id', isLogged, userController.deleteUser );
+router.get('/users', isLogged, isAdmin, userController.users );
+router.get('/createUser', isLogged, isAdmin, userController.createUserPage );
+router.post('/create', isLogged, isAdmin, userController.createUser );
+router.get('/user', isLogged, isAdmin, userController.user );
+router.get('/updateUser/:id', isLogged, isAdmin, userController.updateUserPage );
+router.post('/updateUser/:id', isLogged, isAdmin, userController.updateUser );
+router.delete('/deleteUser/:id', isLogged, isAdmin, userController.deleteUser );
 
 
 
 // Categories CRUD Routes
 
-router.get('/categories', isLogged, categoryController.categories );
-router.post('/createCategory', isLogged, categoryController.createCategory );
-router.get('/createCategory', isLogged, categoryController.createCategoryPage  );
-router.get('/updateCategory/:id', isLogged, categoryController.updateCategoryPage );
-router.post('/updateCategory/:id', isLogged, categoryController.updateCategory );
-router.delete('/deleteCategory/:id', isLogged, categoryController.deleteCategory );
+router.get('/categories', isLogged, isAdmin, categoryController.categories );
+router.post('/createCategory', isLogged, isAdmin, categoryController.createCategory );
+router.get('/createCategory', isLogged, isAdmin, categoryController.createCategoryPage  );
+router.get('/updateCategory/:id', isLogged, isAdmin, categoryController.updateCategoryPage );
+router.post('/updateCategory/:id', isLogged, isAdmin, categoryController.updateCategory );
+router.delete('/deleteCategory/:id', isLogged, isAdmin, categoryController.deleteCategory );
 
 
 
 // Setting Routes
 
-router.get('/settings', isLogged, userController.settings)
+router.get('/settings', isLogged, isAdmin, userController.settings)
 
 
 

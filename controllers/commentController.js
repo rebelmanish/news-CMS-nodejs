@@ -5,7 +5,7 @@ const Comment = require('../models/Comment.model')
 
 
 const comments = async (req, res) => {
-    res.render('admin/comments')
+    res.render('admin/comments', { user: req.user })
  };
 const deleteComment = async (req, res) => { };
 
