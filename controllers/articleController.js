@@ -149,8 +149,8 @@ const deleteArticle = async (req, res) => {
                 news.img
             );
 
-            console.log('ImgPath: ', imagePath);
-            console.log('newsImg: ', news.img);
+            // console.log('ImgPath: ', imagePath);
+            // console.log('newsImg: ', news.img);
 
 
             if (fs.existsSync(imagePath)) {
