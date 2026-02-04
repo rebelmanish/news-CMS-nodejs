@@ -184,3 +184,7 @@ dist
 
 # SvelteKit build / generate output
 .svelte-kit
+
+
+# uploaded files
+uploads/

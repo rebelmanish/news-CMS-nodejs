@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 
-const isLogged = async (req, res, next) => {
+const isLogged = (req, res, next) => {
     const token = req.cookies.token 
     if (!token) {
         return res.status(401).redirect('/admin/');
@@ -11,6 +11,7 @@ const isLogged = async (req, res, next) => {
         req.user = decoded;
         next(); 
     } catch (error) {
+        res.clearCookie('token');
         return res.status(401).redirect('/admin/');
     }
 };

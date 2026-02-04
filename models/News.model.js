@@ -26,6 +26,7 @@ const newsSchema = new mongoose.Schema({
     },
     publishedAt: {
         type: Date,
+        default: Date.now,
         required: true
     },
     timestamps: {

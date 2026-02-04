@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const upload = require('../middlewares/multer');
 
 
 
@@ -23,10 +24,10 @@ router.get('/logout', isLogged, userController.logout );
 // Articles CRUD Routes
 
 router.get('/articles', isLogged, acticleController.articles );
-router.post('/createArticles', isLogged, acticleController.createArticle );
-router.get('/createArticles', isLogged, acticleController.createArticlePage);
+router.post('/createArticle', isLogged, upload, acticleController.createArticle );
+router.get('/createArticle', isLogged, acticleController.createArticlePage);
 router.get('/updateArticle/:id', isLogged, acticleController.updateArticlePage );
-router.post('/updateArticle/:id', isLogged, acticleController.updateArticle );
+router.post('/updateArticle/:id', isLogged, upload, acticleController.updateArticle );
 router.delete('/deleteArticle/:id', isLogged, acticleController.deleteArticle );
 
 // Comments Routes
