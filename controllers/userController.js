@@ -1,6 +1,8 @@
 
 const mongoose = require('mongoose')
 const User = require('../models/User.model')
+const News = require('../models/News.model')
+const Category = require('../models/Category.model')
 const bcrypt = require('bcryptjs')
 const jwt =  require('jsonwebtoken')
 const dotenv = require('dotenv')
@@ -111,7 +113,28 @@ const deleteUser = async (req, res) => {
  }
 
 const dashboard = async (req, res) => {
-    res.render('admin/dashboard', { user: req.user })
+    try {
+        let articleCount
+
+        if (req.user.role == 'administrator') {
+            articleCount = await News.countDocuments();
+        }else{
+            articleCount = await News.countDocuments({author: req.user.id});
+        }
+
+        const userCount = await User.countDocuments();
+        const categoryCount = await Category.countDocuments();
+        
+        res.render('admin/dashboard', { 
+            user: req.user,
+            articleCount,
+            userCount, 
+            categoryCount
+        })
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Failed to load dashboard');
+    }
  }
 
  const settings = async (req, res) => {
