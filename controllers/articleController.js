@@ -6,7 +6,7 @@ const News = require('../models/News.model')
 const Category = require('../models/Category.model')
 const User = require('../models/User.model');
 
-const articles = async (req, res) => {
+const articles = async (req, res, next) => {
     try {
         let articles
         if (req.user.role == 'administrator') {
@@ -25,8 +25,9 @@ const articles = async (req, res) => {
         // console.log('articles: ', articles)
         res.render('admin/articles', { user: req.user, articles })
     } catch (error) {
-        console.log(error)
-        res.status(500).send('error', { message: 'Unable to fetch articles' })
+        // console.log(error)
+        // res.status(500).send('error', { message: 'Unable to fetch articles' })
+        next(error)
     }
  }
 const createArticlePage = async (req, res) => {

@@ -70,8 +70,24 @@ router.delete('/deleteCategory/:id', isLogged, isAdmin, categoryController.delet
 router.get('/settings', isLogged, isAdmin, userController.settings)
 router.post('/settings', isLogged, isAdmin, upload.single('website_logo'), userController.saveSettings)
 
+// 404 Routes
 
+router.use(isLogged, (req, res, next) => {
+    res.status(404).render('admin/404', {
+        message: 'Page not found',
+        user: req.user || null
+    })
+});
 
+router.use(isLogged, isAdmin,(err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).render('admin/500', {
+        message: 'Something went wrong: Internal Server Error',
+        user: req.user || null
+    })
+});
+
+// TODO : Error Handling later
 
 module.exports = router;
 
