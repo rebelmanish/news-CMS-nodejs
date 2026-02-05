@@ -2,6 +2,7 @@
 const mongoose = require('mongoose')
 const User = require('../models/User.model')
 const News = require('../models/News.model')
+const Settings = require('../models/Setting.model')
 const Category = require('../models/Category.model')
 const bcrypt = require('bcryptjs')
 const jwt =  require('jsonwebtoken')
@@ -138,8 +139,50 @@ const dashboard = async (req, res) => {
  }
 
  const settings = async (req, res) => {
-    res.render('admin/setting', { user: req.user })
+    try {
+        const settings = await Settings.findOne().lean()
+        res.render('admin/setting', { user: req.user , settings})
+    } catch (error) {
+        console.log(error)
+        res.status(500).send('Failed to load settings page')
+    }
  }
+const saveSettings = async (req, res) => {
+    const { web_title, footer_description } = req.body;
+    const newLogo = req.file ? req.file.filename : null;
+
+    try {
+        const existingSettings = await Settings.findOne({});
+
+        // If a new logo is uploaded and an old one exists → delete old file
+        if (newLogo && existingSettings?.website_logo) {
+            const oldImagePath = path.join(
+                __dirname,
+                '../public/uploads/',
+                existingSettings.website_logo
+            );
+
+            if (fs.existsSync(oldImagePath)) {
+                fs.unlinkSync(oldImagePath);
+            }
+        }
+
+        await Settings.findOneAndUpdate(
+            {},
+            {
+                website_title: web_title,
+                footer_description,
+                ...(newLogo && { website_logo: newLogo })
+            },
+            { new: true, upsert: true }
+        );
+
+        res.redirect('/admin/settings');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Failed to save settings');
+    }
+};
 
 module.exports = {
     loginPage,
@@ -149,6 +192,7 @@ module.exports = {
     createUserPage,
     createUser,
     user,
+    saveSettings,
     updateUserPage,
     updateUser,
     deleteUser,

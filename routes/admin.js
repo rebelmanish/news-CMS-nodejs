@@ -7,7 +7,7 @@ const upload = require('../middlewares/multer');
 const acticleController = require('../controllers/articleController')
 const userController = require('../controllers/userController')
 const categoryController = require('../controllers/categoryController');
-const  commentController  = require('../controllers/commentController');
+const commentController  = require('../controllers/commentController');
 const isLogged = require('../middlewares/isLogged');
 const isAdmin = require('../middlewares/isAdmin');
 
@@ -24,10 +24,10 @@ router.get('/logout', isLogged, userController.logout );
 // Articles CRUD Routes
 
 router.get('/articles', isLogged, acticleController.articles );
-router.post('/createArticle', isLogged, upload, acticleController.createArticle );
+router.post('/createArticle', isLogged, upload.single('image'), acticleController.createArticle );
 router.get('/createArticle', isLogged, acticleController.createArticlePage);
 router.get('/updateArticle/:id', isLogged, acticleController.updateArticlePage );
-router.post('/updateArticle/:id', isLogged, upload, acticleController.updateArticle );
+router.post('/updateArticle/:id', isLogged, upload.single('image'), acticleController.updateArticle );
 router.delete('/deleteArticle/:id', isLogged, acticleController.deleteArticle );
 
 // Comments Routes
@@ -68,6 +68,7 @@ router.delete('/deleteCategory/:id', isLogged, isAdmin, categoryController.delet
 // Setting Routes
 
 router.get('/settings', isLogged, isAdmin, userController.settings)
+router.post('/settings', isLogged, isAdmin, upload.single('website_logo'), userController.saveSettings)
 
 
 
