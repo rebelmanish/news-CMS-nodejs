@@ -51,5 +51,5 @@ app.use('/admin', require('./routes/admin') );
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}`);
+    console.log(`Server running at \x1b[34mhttp://localhost:${port}\x1b[0m`);
 });
