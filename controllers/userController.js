@@ -1,5 +1,4 @@
 
-const mongoose = require('mongoose')
 const User = require('../models/User.model')
 const News = require('../models/News.model')
 const Settings = require('../models/Setting.model')
@@ -7,29 +6,38 @@ const Category = require('../models/Category.model')
 const bcrypt = require('bcryptjs')
 const jwt =  require('jsonwebtoken')
 const dotenv = require('dotenv')
+const { validationResult } = require('express-validator')
 
 dotenv.config()
 
 const loginPage = async (req, res) => {
     res.render('admin/login',{
-        layout: false
+        layout: false,
+        errors: 0
     })
  }
 
 const adminLogin = async (req, res) => {
-    const { username, password } = req.body
+    const err = validationResult(req) 
+    if (!err.isEmpty()) { 
+        return res.render('admin/login',{
+        layout: false,
+        errors: err.array()
+    })      
+    }
+    const { username, password } = req.body 
     try {
         const user = await User.findOne({ username })
 
         
         if (! user ) {
-            return res.status(401).send('Invalid username or password')  
+            return res.status(404).send('Invalid username or password')  
         }
 
         const isMatch = await bcrypt.compare(password, user.password)
 
         if (! isMatch ) {
-            return res.status(400).send('Invalid username or password')  
+            return res.status(401).send('Invalid username or password')  
         }
 
         const jwtData = { id: user._id, role: user.role, username: user.username, fname: user.fullname }
@@ -54,7 +62,7 @@ const users = async (req, res) => {
     // console.log(users)
  }
 const createUserPage = async (req, res) => {
-    res.render('admin/users/create.ejs', { user: req.user})
+    res.render('admin/users/create.ejs', { user: req.user, errors: 0 })
  }
 const user = async (req, res) => { }
 const updateUserPage = async (req, res) => {
@@ -64,7 +72,7 @@ const updateUserPage = async (req, res) => {
         if (!user) {
             return res.status(404).send('User not found')
         }
-        res.render('admin/users/update', { user,  user: req.user })
+        res.render('admin/users/update', { user,  user: req.user, errors: 0 })
     } catch (error) {
         console.log(error)
         res.status(500).send('Internal Server Error')
@@ -72,11 +80,25 @@ const updateUserPage = async (req, res) => {
     }
  }
 const createUser = async (req, res) => {
+    const errors = validationResult(req)
+    if (!errors.isEmpty()){
+        return res.render('admin/users/create.ejs', {
+            user: req.user,
+            errors: errors.array()
+        })
+    }
     await User.create(req.body)
     res.redirect('/admin/users')
  } 
 const updateUser = async (req, res) => {
     const id = req.params.id
+    const errors = validationResult(req)
+    if (!errors.isEmpty()){
+        return res.render('admin/users/update.ejs', {
+            user: req.body,
+            errors: errors.array()
+        })
+    }
     const { fullname, password, role } = req.body
     try {
         const user = await User.findById(id)

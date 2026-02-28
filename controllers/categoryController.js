@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const { validationResult } = require('express-validator')
 
 const Category = require('../models/Category.model')
 
@@ -7,9 +8,16 @@ const categories = async (req, res) => {
     res.render('admin/categories', { user: req.user, categories })
  }
 const createCategoryPage = async (req, res) => {
-    res.render('admin/categories/create', { user: req.user })
+    res.render('admin/categories/create', { user: req.user, errors: 0 })
  }
 const createCategory = async (req, res) => {
+    const errors = validationResult(req)
+    if (!errors.isEmpty()){
+        return res.render('admin/categories/create.ejs', {
+            user: req.user,
+            errors: errors.array()
+        })
+    }
     const { cat, description } = req.body
     try {
         await Category.create({
@@ -30,7 +38,7 @@ const updateCategoryPage = async (req, res) => {
         if (!category) {
             return res.status(404).send('Category not found')
         }
-        res.render('admin/categories/update', { user: req.user, category })
+        res.render('admin/categories/update', { user: req.user, category, errors: 0 })
     } catch (error) {
         console.log(error)
         res.status(500).send('Internal Server Error')
@@ -38,6 +46,15 @@ const updateCategoryPage = async (req, res) => {
  }
 const updateCategory = async (req, res) => {
     const { id } = req.params
+        const errors = validationResult(req)
+    if (!errors.isEmpty()){
+        const category = await Category.findById(id).lean()
+        return res.render('admin/categories/update.ejs', {
+            user: req.user,
+            errors: errors.array(),
+            category
+        })
+    }
     const { cat, description } = req.body
     try {
         const category = await Category.findByIdAndUpdate(id, {

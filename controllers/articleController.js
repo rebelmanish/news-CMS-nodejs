@@ -5,6 +5,7 @@ const path = require('path');
 const News = require('../models/News.model')
 const Category = require('../models/Category.model')
 const User = require('../models/User.model');
+const { validationResult } = require('express-validator')
 
 const articles = async (req, res, next) => {
     try {
@@ -33,11 +34,18 @@ const articles = async (req, res, next) => {
 const createArticlePage = async (req, res) => {
     const categories= await Category.find().lean()
     // console.log(categories)
-    res.render('admin/articles/create', { user: req.user, categories })
+    res.render('admin/articles/create', { user: req.user, categories, errors: 0 })
  }
 const createArticle = async (req, res) => {
     const {title, content, category} = req.body
-
+    const errors = validationResult(req)
+    if (!errors.isEmpty()){
+        return res.render('admin/articles/create.ejs', {
+            user: req.user,
+            categories: await Category.find().lean(), 
+            errors: errors.array()
+        })
+    }
     
     try {
         // Validate the author and category ObjectIds
@@ -46,7 +54,7 @@ const createArticle = async (req, res) => {
             return res.status(400).json({ error: 'Invalid author ID format' });
         }
         
-        console.log('Category: ', category)
+        // console.log('Category: ', category)
 
         if (!mongoose.Types.ObjectId.isValid(category)) {
             return res.status(400).json({ error: 'Invalid category ID format' });
@@ -86,7 +94,7 @@ const updateArticlePage = async (req, res) => {
         }
 
         const categories= await Category.find().lean()
-        res.render('admin/articles/update', { user: req.user, article, categories })
+        res.render('admin/articles/update', { user: req.user, article, categories, errors: 0 })
     } catch (error) {
         console.log(error)
         res.status(500).send('error', { message: 'Unable to fetch article' })
@@ -94,6 +102,15 @@ const updateArticlePage = async (req, res) => {
  }
 const updateArticle = async (req, res) => {
     const id = req.params.id
+    const errors = validationResult(req)
+    if (!errors.isEmpty()){
+        return res.render('admin/articles/update.ejs', {
+            user: req.user,
+            article: req.body,
+            categories: await Category.find().lean(),
+            errors: errors.array()
+        })
+    }
     try {
         const {title, content, category} = req.body
         const article = await News.findById(id);

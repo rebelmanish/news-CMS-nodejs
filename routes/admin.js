@@ -1,6 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const upload = require('../middlewares/multer');
+const { 
+    loginValidation,
+    userValidation,
+    userUpdateValidation,
+    articleValidation,
+    catValidation
+ } = require('../middlewares/validations');
 
 
 
@@ -18,16 +25,16 @@ const isAdmin = require('../middlewares/isAdmin');
 
 router.get('/login', userController.loginPage );
 router.get('/', userController.loginPage );
-router.post('/submit', userController.adminLogin );
+router.post('/submit', loginValidation, userController.adminLogin );
 router.get('/logout', isLogged, userController.logout );
 
 // Articles CRUD Routes
 
 router.get('/articles', isLogged, acticleController.articles );
-router.post('/createArticle', isLogged, upload.single('image'), acticleController.createArticle );
+router.post('/createArticle', isLogged, articleValidation, upload.single('image'), acticleController.createArticle );
 router.get('/createArticle', isLogged, acticleController.createArticlePage);
 router.get('/updateArticle/:id', isLogged, acticleController.updateArticlePage );
-router.post('/updateArticle/:id', isLogged, upload.single('image'), acticleController.updateArticle );
+router.post('/updateArticle/:id', isLogged, articleValidation, upload.single('image'), acticleController.updateArticle );
 router.delete('/deleteArticle/:id', isLogged, acticleController.deleteArticle );
 
 // Comments Routes
@@ -46,10 +53,10 @@ router.get('/dashboard', isLogged, userController.dashboard);
 
 router.get('/users', isLogged, isAdmin, userController.users );
 router.get('/createUser', isLogged, isAdmin, userController.createUserPage );
-router.post('/create', isLogged, isAdmin, userController.createUser );
+router.post('/create', isLogged, isAdmin, userValidation, userController.createUser );
 router.get('/user', isLogged, isAdmin, userController.user );
 router.get('/updateUser/:id', isLogged, isAdmin, userController.updateUserPage );
-router.post('/updateUser/:id', isLogged, isAdmin, userController.updateUser );
+router.post('/updateUser/:id', isLogged, isAdmin, userUpdateValidation, userController.updateUser );
 router.delete('/deleteUser/:id', isLogged, isAdmin, userController.deleteUser );
 
 
@@ -57,10 +64,10 @@ router.delete('/deleteUser/:id', isLogged, isAdmin, userController.deleteUser );
 // Categories CRUD Routes
 
 router.get('/categories', isLogged, isAdmin, categoryController.categories );
-router.post('/createCategory', isLogged, isAdmin, categoryController.createCategory );
+router.post('/createCategory', isLogged, isAdmin, catValidation, categoryController.createCategory );
 router.get('/createCategory', isLogged, isAdmin, categoryController.createCategoryPage  );
 router.get('/updateCategory/:id', isLogged, isAdmin, categoryController.updateCategoryPage );
-router.post('/updateCategory/:id', isLogged, isAdmin, categoryController.updateCategory );
+router.post('/updateCategory/:id', isLogged, isAdmin,catValidation, categoryController.updateCategory );
 router.delete('/deleteCategory/:id', isLogged, isAdmin, categoryController.deleteCategory );
 
 

@@ -50,7 +50,7 @@
               <li>
                 <a href="/admin/articles">Article</a>
               </li>
-              <% if (user.role == 'administrator') { %>
+              <% if (user && user.role == 'administrator') { %>
               <li>
                 <a href="/admin/categories">Category</a>
               </li>
@@ -61,7 +61,7 @@
               <li>
                 <a href="/admin/comments">Comments</a>
               </li>
-              <% if (user.role == 'administrator') { %>
+              <% if (user && user.role == 'administrator') { %>
               <li>
                 <a href="/admin/settings">Settings</a>
               </li>

@@ -29,7 +29,7 @@
                       type="text"
                       class="form-control"
                       name="username"
-                      required=""
+                      required
                     />
                   </div>
                   <div class="mb-3">
@@ -38,13 +38,15 @@
                       type="password"
                       class="form-control"
                       name="password"
-                      required=""
+                      required
                     />
                   </div>
                   <div class="d-grid">
                     <button type="submit" class="btn btn-primary">Login</button>
                   </div>
                 </form>
+                <!-- error message -->
+                 <%- include('partials/error') %>
               </div>
             </div>
           </div>
