@@ -37,10 +37,9 @@
                 <div class="col-md-12">
                     <ul class="menu">
                         <li><a href="/">Home</a></li>
-                        <li><a href="/category/business">Business</a></li>
-                        <li><a href="/category/entertainment">Entertainment</a></li>
-                        <li><a href="/category/sports">Sports</a></li>
-                        <li><a href="/category/politics">Politics</a></li>
+                        <% menus.forEach(function(menu){ %>
+                            <li><a href="/category/<%=menu.slug%>"><%=menu.name%></a></li>
+                        <%})%>
                     </ul>
                 </div>
             </div>
