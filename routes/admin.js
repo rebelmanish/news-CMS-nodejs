@@ -31,10 +31,10 @@ router.get('/logout', isLogged, userController.logout );
 // Articles CRUD Routes
 
 router.get('/articles', isLogged, acticleController.articles );
-router.post('/createArticle', isLogged, articleValidation, upload.single('image'), acticleController.createArticle );
+router.post('/createArticle', isLogged, upload.single('image'), articleValidation, acticleController.createArticle );
 router.get('/createArticle', isLogged, acticleController.createArticlePage);
 router.get('/updateArticle/:id', isLogged, acticleController.updateArticlePage );
-router.post('/updateArticle/:id', isLogged, articleValidation, upload.single('image'), acticleController.updateArticle );
+router.post('/updateArticle/:id', isLogged, upload.single('image'), articleValidation, acticleController.updateArticle );
 router.delete('/deleteArticle/:id', isLogged, acticleController.deleteArticle );
 
 // Comments Routes
