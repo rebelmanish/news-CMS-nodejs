@@ -103,6 +103,10 @@
       .then(response => {
         if (response.ok) {
           location.reload();
+        } else if (response.status === 400) {
+          response.json().then(data => {
+            alert(data.message);
+          });
         } else {
           alert('Failed to delete category.');
         }

@@ -95,7 +95,22 @@ const updateCategory = async (req, res) => {
  }
 const deleteCategory = async (req, res) => {
     const { id } = req.params
-    console.log(`Try to delete ${id}` )
+    const news = await Category.aggregate([
+        {
+            $match: { _id: new mongoose.Types.ObjectId(id) }
+        },
+        {
+            $lookup: {
+                from: 'news',
+                localField: '_id',
+                foreignField: 'category',
+                as: 'news'
+            }
+        }
+    ])
+        if (news[0].news.length > 0) {
+            return res.status(400).send({ message: 'Category is associated with news' })
+        }
     try {
         const result = await Category.deleteOne({ _id: new mongoose.Types.ObjectId(id) })
         res.status(200).json({ message: 'Category deleted successfully' })

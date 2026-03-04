@@ -131,7 +131,7 @@
               <tr>
                 <td class="id"><%= index + 1 %></td>
                 <td><%= article.title %></td>
-                <td><%= article.category.name %></td>
+                <td><%= article.category?.name || 'Deleted Category' %></td>
                 <td><%= article.publishedAt.toDateString() %></td>
                 <td><%= article.author?.username || 'Deleted User' %></td>
                 <td class="edit">
