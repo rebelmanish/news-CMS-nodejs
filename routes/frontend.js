@@ -17,7 +17,7 @@ router.get('/', index );
 router.get('/category/:name', articleByCategory );
 router.get('/article/:id', singleArticle )
 router.get('/search', search )
-router.get('/author', author )
+router.get('/author/:name', author )
 router.post('/comment/id', addComment )
 
 

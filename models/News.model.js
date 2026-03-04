@@ -27,13 +27,13 @@ const newsSchema = new mongoose.Schema({
     publishedAt: {
         type: Date,
         default: Date.now,
-        required: true
-    },
-    timestamps: {
-        type: Date,
-        default: Date.now
+        index: true
     }
-});
+},
+    {
+        timestamps: true
+    }
+);
 
 newsSchema.plugin(mongoosePaginate);
 

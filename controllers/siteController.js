@@ -8,20 +8,25 @@ const Comment = require('../models/Comment.model')
 
 
 const index = async (req, res) => {
-    res.render('index')
- }
+    const news = await News.find()
+        .populate('category', {'name':1, 'slug':1})
+        .populate('author', 'fullname')
+        .sort({ publishedAt: -1 })
+        .lean()
+    res.render('index', {news})
+}
 const articleByCategory = async (req, res) => {
     res.render('category')
- }
+}
 const singleArticle = async (req, res) => {
     res.render('single')
- }
+}
 const search = async (req, res) => {
     res.render('search')
- }
+}
 const author = async (req, res) => {
     res.render('author')
- }
+}
 const addComment = async (req, res) => { }
 
 
