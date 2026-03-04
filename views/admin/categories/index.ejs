@@ -65,7 +65,7 @@
                         <tr>
                           <td class='id'><%= index + 1 %></td>
                           <td><%= category.name %></td>
-                          <td>0</td>
+                          <td><%= newsCount.find(c => c.name === category.name)?.newsCount || 0 %></td>
                           <td class='edit'><a href='/admin/updateCategory/<%= category._id %>'><i class='fa fa-edit'></i></a></td>
                           <td class='delete'>
                             <i onclick="deleteCategory('<%= category._id %>')"

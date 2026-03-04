@@ -5,7 +5,30 @@ const Category = require('../models/Category.model')
 
 const categories = async (req, res) => {
     const categories = await Category.find().lean()
-    res.render('admin/categories', { user: req.user, categories })
+    let newsCount
+try {
+        newsCount = await Category.aggregate([
+            {
+                $lookup: {
+                    from: 'news',
+                    localField: '_id',
+                    foreignField: 'category',
+                    as: 'news'
+                }
+            },
+            {
+                $project: {
+                    name: 1,
+                    newsCount: { $size: '$news' }
+                }
+            }
+        ])
+        // console.log(newsCount)
+} catch (error) {
+    console.error(error)
+}
+    
+    res.render('admin/categories', { user: req.user, categories, newsCount })
  }
 const createCategoryPage = async (req, res) => {
     res.render('admin/categories/create', { user: req.user, errors: 0 })
